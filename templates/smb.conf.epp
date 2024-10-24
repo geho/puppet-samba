@@ -1,0 +1,324 @@
+<%- |
+String[1] $security,
+String[1] $workgroup,
+String[1] $passdb_backend,
+
+# networking config
+Optional[Array[String[1]]] $hosts_allow,
+Optional[Array[String[1]]] $hosts_deny,
+Optional[Stdlib::Yes_no] $hostname_lookups,
+Optional[Array[String[1]]] $interfaces,
+Optional[Stdlib::Yes_no] $bind_interfaces_only,
+Optional[Integer] $keepalive,
+Optional[Array[String[1]]] $socket_options,
+
+# tls config
+Optional[Stdlib::Yes_no] $tls_enabled,
+# paths can be relative (String[1]) to private dir
+Optional[Variant[Stdlib::Absolutepath,String[1]]] $tls_cafile,
+Optional[Variant[Stdlib::Absolutepath,String[1]]] $tls_certfile,
+Optional[Variant[Stdlib::Absolutepath,String[1]]] $tls_crlfile,
+Optional[Variant[Stdlib::Absolutepath,String[1]]] $tls_dh_params_file,
+Optional[Variant[Stdlib::Absolutepath,String[1]]] $tls_keyfile,
+Optional[Array[String[1]]] $tls_priority,
+Optional[Enum['no_check','ca_only','ca_and_name_if_available','ca_and_name','as_strict_as_possible']] $tls_verify_peer,
+
+# kerberos config
+Optional[Enum['all','strong','legacy']] $kerberos_encryption_types,
+Optional[Enum['secrets only','system keytab','dedicated keytab','secrets and keytab']] $kerberos_method,
+Optional[String[1]] $realm,
+
+# ldap config
+Optional[Enum['auto','never','finding','searching','always']] $ldap_deref,
+Optional[Stdlib::Yes_no] $ldap_follow_referral,
+Optional[Enum['off','start_tls']] $ldap_ssl,
+Optional[String[1]] $ldap_suffix,
+Optional[String[1]] $ldap_machine_suffix,
+
+# winbind config
+Optional[Stdlib::Yes_no] $create_krb5_conf,
+Optional[Integer] $idmap_cache_time,
+Optional[Hash[String,Hash[String[1],String[1]]]] $idmap_config,
+Optional[Stdlib::Yes_no] $include_system_krb5_conf,
+Optional[Stdlib::Yes_no] $require_strong_key,
+Optional[String[1]] $template_homedir,
+Optional[String[1]] $template_shell,
+Optional[Stdlib::Yes_no] $winbind_enum_groups,
+Optional[Stdlib::Yes_no] $winbind_enum_users,
+Optional[Stdlib::Yes_no] $winbind_nested_groups,
+Optional[Stdlib::Yes_no] $winbind_normalize_names,
+Optional[String[1]] $winbind_nss_info,
+Optional[Stdlib::Yes_no] $winbind_offline_logon,
+Optional[Stdlib::Yes_no] $winbind_refresh_tickets,
+
+# client config
+Optional[String[1]] $client_ipc_min_protocol,
+Optional[String[1]] $client_ipc_max_protocol,
+Optional[String[1]] $client_ipc_signing,
+Optional[Enum['plain','sign','seal']] $client_ldap_sasl_wrapping,
+Optional[String[1]] $client_min_protocol,
+Optional[String[1]] $client_max_protocol,
+Optional[Enum['default','plain','sign','encrypt']] $client_protection,
+Optional[Enum['default','desired','required','disabled']] $client_signing,
+Optional[Array[String[1]]] $client_smb3_encryption_algorithms,
+Optional[Enum['default','if_required','desired','required','off']] $client_smb_encrypt,
+Optional[Array[String[1]]] $client_smb3_signing_algorithms,
+Optional[Enum['desired','required','off']] $client_use_kerberos,
+Optional[Stdlib::Yes_no] $client_use_spnego_principal,
+
+# server config
+Optional[String[1]] $server_string,
+Optional[String[1]] $netbios_name,
+Optional[String[1]] $server_min_protocol,
+Optional[String[1]] $server_max_protocol,
+Optional[String[1]] $server_role,
+Optional[Array[String[1]]] $server_services,
+Optional[Enum['default','auto','mandatory','disabled']] $server_signing,
+Optional[Array[String[1]]] $server_smb3_encryption_algorithms,
+Optional[Array[String[1]]] $server_smb3_signing_algorithms,
+Optional[Enum['Never','Bad User','Bad Password','Bad Uid']] $map_to_guest,
+
+# global share defaults
+Optional[Array[String[1]]] $vfs_objects,
+
+# logging config
+Optional[String] $logging,
+Optional[Stdlib::Absolutepath] $log_file,
+Optional[Variant[Integer,Array[String[1]]]] $log_level,
+Optional[Integer] $max_log_size,
+
+# additional config
+Optional[Array[String]] $additional_config,
+| -%>
+# This file is managed by puppet. Do not edit
+[global]
+    security = <%= $security %>
+    workgroup = <%= $workgroup %>
+    passdb backend = <%= $passdb_backend %>
+
+    # networking config
+<%- unless $hosts_allow =~ Undef { -%>
+    hosts allow = <%= $hosts_allow.join(' ') %>
+<%- } -%>
+<%- unless $hosts_deny =~ Undef { -%>
+    hosts deny = <%= $hosts_deny.join(' ') %>
+<%- } -%>
+<%- unless $hostname_lookups =~ Undef { -%>
+    hostname lookups = <%= $hostname_lookups %>
+<%- } -%>
+<%- unless $interfaces =~ Undef { -%>
+    interfaces = <%= $interfaces.join(' ') %>
+<%- } -%>
+<%- unless $bind_interfaces_only =~ Undef { -%>
+    bind interfaces only = <%= $bind_interfaces_only %>
+<%- } -%>
+<%- unless $keepalive =~ Undef { -%>
+    keepalive = <%= $keepalive %>
+<%- } -%>
+<%- unless $socket_options =~ Undef { -%>
+    socket options = <%= $socket_options.join(' ') %>
+<%- } -%>
+
+    # tls config
+<%- unless $tls_enabled =~ Undef { -%>
+    tls enabled = <%= $tls_enabled %>
+<%- } -%>
+<%- unless $tls_cafile =~ Undef { -%>
+    tls cafile = <%= $tls_cafile %>
+<%- } -%>
+<%- unless $tls_certfile =~ Undef { -%>
+    tls certfile = <%= $tls_certfile %>
+<%- } -%>
+<%- unless $tls_crlfile =~ Undef { -%>
+    tls crlfile = <%= $tls_crlfile %>
+<%- } -%>
+<%- unless $tls_dh_params_file =~ Undef { -%>
+    tls dh params file = <%= $tls_dh_params_file %>
+<%- } -%>
+<%- unless $tls_keyfile =~ Undef { -%>
+    tls keyfile = <%= $tls_keyfile %>
+<%- } -%>
+<%- unless $tls_priority =~ Undef { -%>
+    tls priority = <%= $tls_priority.join(':') %>
+<%- } -%>
+<%- unless $tls_verify_peer =~ Undef { -%>
+    tls verify peer = <%= $tls_verify_peer %>
+<%- } -%>
+
+    # kerberos config
+<%- unless $kerberos_encryption_types =~ Undef { -%>
+    kerberos encryption types = <%= $kerberos_encryption_types %>
+<%- } -%>
+<%- unless $kerberos_method =~ Undef { -%>
+    kerberos method = <%= $kerberos_method %>
+<%- } -%>
+<%- unless $realm =~ Undef { -%>
+    realm = <%= $realm %>
+<%- } -%>
+
+    # ldap config
+<%- unless $ldap_deref =~ Undef { -%>
+    ldap deref = <%= $ldap_deref %>
+<%- } -%>
+<%- unless $ldap_follow_referral =~ Undef { -%>
+    ldap follow referral = <%= $ldap_follow_referral %>
+<%- } -%>
+<%- unless $ldap_ssl =~ Undef { -%>
+    ldap ssl = <%= $ldap_ssl %>
+<%- } -%>
+<%- unless $ldap_suffix =~ Undef { -%>
+    ldap suffix = <%= $ldap_suffix %>
+<%- } -%>
+<%- unless $ldap_machine_suffix =~ Undef { -%>
+    ldap machine suffix = <%= $ldap_machine_suffix %>
+<%- } -%>
+
+    # winbind config
+<%- unless $create_krb5_conf =~ Undef { -%>
+    create krb5 conf = <%= $create_krb5_conf %>
+<%- } -%>
+<%- unless $idmap_cache_time =~ Undef { -%>
+    idmap cache time = <%= $idmap_cache_time %>
+<%- } -%>
+<%- unless $idmap_config =~ Undef { -%>
+<%- $idmap_config.each |String[1] $idmap_domain, Hash[String[1], String[1]] $idmap_options| { -%>
+<%- $idmap_options.each |String $idmap_option, String $idmap_value| { -%>
+<%- unless $idmap_domain =~ Undef and $idmap_option =~ Undef and $idmap_value =~ Undef { -%>
+    idmap config <%= $idmap_domain %> : <%= $idmap_option %> = <%= $idmap_value %>
+<%-       } -%>
+<%-     } -%>
+<%-   } -%>
+<%- } -%>
+<%- unless $include_system_krb5_conf =~ Undef { -%>
+    include system krb5 conf = <%= $include_system_krb5_conf %>
+<%- } -%>
+<%- unless $require_strong_key =~ Undef { -%>
+    require strong key = <%= $require_strong_key %>
+<%- } -%>
+<%- unless $template_homedir =~ Undef { -%>
+    template homedir = <%= $template_homedir %>
+<%- } -%>
+<%- unless $template_shell =~ Undef { -%>
+    template shell = <%= $template_shell %>
+<%- } -%>
+<%- unless $winbind_enum_groups =~ Undef { -%>
+    winbind enum groups = <%= $winbind_enum_groups %>
+<%- } -%>
+<%- unless $winbind_enum_users =~ Undef { -%>
+    winbind enum users = <%= $winbind_enum_users %>
+<%- } -%>
+<%- unless $winbind_nested_groups =~ Undef { -%>
+    winbind nested groups = <%= $winbind_nested_groups %>
+<%- } -%>
+<%- unless $winbind_normalize_names =~ Undef { -%>
+    winbind normalize names = <%= $winbind_normalize_names %>
+<%- } -%>
+<%- unless $winbind_nss_info =~ Undef { -%>
+    winbind nss info = <%= $winbind_nss_info %>
+<%- } -%>
+<%- unless $winbind_offline_logon =~ Undef { -%>
+    winbind offline logon = <%= $winbind_offline_logon %>
+<%- } -%>
+<%- unless $winbind_refresh_tickets =~ Undef { -%>
+    winbind refresh tickets = <%= $winbind_refresh_tickets %>
+<%- } -%>
+
+    # client config
+<%- unless $client_ipc_min_protocol =~ Undef { -%>
+    client ipc min protocol = <%= $client_ipc_min_protocol %>
+<%- } -%>
+<%- unless $client_ipc_max_protocol =~ Undef { -%>
+    client ipc max protocol = <%= $client_ipc_max_protocol %>
+<%- } -%>
+<%- unless $client_ipc_signing =~ Undef { -%>
+    client ipc signing = <%= $client_ipc_signing %>
+<%- } -%>
+<%- unless $client_ldap_sasl_wrapping =~ Undef { -%>
+    client ldap sasl wrapping = <%= $client_ldap_sasl_wrapping %>
+<%- } -%>
+<%- unless $client_min_protocol =~ Undef { -%>
+    client min protocol = <%= $client_min_protocol %>
+<%- } -%>
+<%- unless $client_max_protocol =~ Undef { -%>
+    client max protocol = <%= $client_max_protocol %>
+<%- } -%>
+<%- unless $client_protection =~ Undef { -%>
+    client protection = <%= $client_protection %>
+<%- } -%>
+<%- unless $client_signing =~ Undef { -%>
+    client signing = <%= $client_signing %>
+<%- } -%>
+<%- unless $client_smb3_encryption_algorithms =~ Undef { -%>
+    client smb3 encryption algorithms = <%= $client_smb3_encryption_algorithms.join(' ') %>
+<%- } -%>
+<%- unless $client_smb_encrypt =~ Undef { -%>
+    client smb encrypt = <%= $client_smb_encrypt %>
+<%- } -%>
+<%- unless $client_smb3_signing_algorithms =~ Undef { -%>
+    client smb3 signing algorithms = <%= $client_smb3_signing_algorithms.join(' ') %>
+<%- } -%>
+<%- unless $client_use_kerberos =~ Undef { -%>
+    client use kerberos = <%= $client_use_kerberos %>
+<%- } -%>
+<%- unless $client_use_spnego_principal =~ Undef { -%>
+    client use spnego principal = <%= $client_use_spnego_principal %>
+<%- } -%>
+
+    # server config
+<%- unless $server_string =~ Undef { -%>
+    server string = <%= $server_string %>
+<%- } -%>
+<%- unless $netbios_name =~ Undef { -%>
+    netbios name = <%= $netbios_name %>
+<%- } -%>
+<%- unless $server_min_protocol =~ Undef { -%>
+    server min protocol = <%= $server_min_protocol %>
+<%- } -%>
+<%- unless $server_max_protocol =~ Undef { -%>
+    server max protocol = <%= $server_max_protocol %>
+<%- } -%>
+<%- unless $server_role =~ Undef { -%>
+    server role = <%= $server_role %>
+<%- } -%>
+<%- unless $server_services =~ Undef { -%>
+    server services = <%= $server_services.join(', ') %>
+<%- } -%>
+<%- unless $server_signing =~ Undef { -%>
+    server signing = <%= $server_signing %>
+<%- } -%>
+<%- unless $server_signing =~ Undef { -%>
+    server signing = <%= $server_signing %>
+<%- } -%>
+<%- unless $server_smb3_encryption_algorithms =~ Undef { -%>
+    server smb3 encryption algorithms = <%= $server_smb3_encryption_algorithms.join(' ') %>
+<%- } -%>
+<%- unless $server_smb3_signing_algorithms =~ Undef { -%>
+    server smb3 signing algorithms = <%= $server_smb3_signing_algorithms.join(' ') %>
+<%- } -%>
+<%- unless $map_to_guest =~ Undef { -%>
+    map to guest = <%= $map_to_guest %>
+<%- } -%>
+
+    # global share defaults
+<%- unless $vfs_objects =~ Undef { -%>
+    vfs objects = <%= $vfs_objects.join(' ') %>
+<%- } -%>
+
+    # logging config
+<%- unless $logging =~ Undef { -%>
+    logging = <%= $logging %>
+<%- } -%>
+<%- unless $log_file =~ Undef { -%>
+    log file = <%= $log_file %>
+<%- } -%>
+# TODO Optional[Variant[Integer,Array[String[1]]]] $log_level,
+<%- unless $max_log_size =~ Undef { -%>
+    max log size = <%= $max_log_size %>
+<%- } -%>
+
+    # additional config
+<%- unless $additional_config =~ Undef { -%>
+<%- $additional_config.each |String[1] $config_line| { -%>
+    <%= $config_line %>
+<%-   } -%>
+<%- } -%>

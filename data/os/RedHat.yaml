@@ -1,0 +1,46 @@
+# data/os/RedHat.yaml
+---
+# package management
+samba::common_packages:
+  - "samba-common"
+  - "samba-common-tools"
+samba::client_packages:
+  - "samba-client"
+samba::server_packages:
+  - "samba"
+samba::utils_packages:
+  - "cifs-utils"
+  - "samba-tools"
+samba::winbind_packages:
+  - "samba-winbind"
+  - "samba-winbind-clients"
+samba::plugins_packages:
+  - "sssd-winbind-idmap"
+
+# service management
+samba::server_service_names:
+  - "smb"
+  - "nmb"
+samba::winbind_service_names:
+  - "winbind"
+
+# files and directories management
+samba::system_config_directory: "/etc/samba"
+samba::system_config_file: "/etc/samba/smb.conf"
+samba::config_directory: "/etc/samba"
+samba::config_file: "/etc/samba/smb.conf"
+samba::binddns_dir: "/var/lib/samba/bind-dns"
+samba::cache_directory: "/var/lib/samba"
+samba::ctdbd_socket: ~
+samba::lock_directory: "/var/lib/samba/lock"
+samba::ncalrpc_dir: "/run/samba/ncalrpc"
+samba::ntp_signd_socket_directory: "/var/lib/samba/ntp_signd"
+samba::pid_directory: "/run"
+samba::private_dir: "/var/lib/samba/private"
+samba::root_directory: ~
+samba::smb_passwd_file: "/var/lib/samba/private/smbpasswd"
+samba::state_directory: "/var/lib/samba"
+samba::usershare_path: "/var/lib/samba/usershares"
+samba::utmp_directory: ~
+samba::winbindd_socket_directory: "/run/samba/winbindd"
+samba::wtmp_directory: ~

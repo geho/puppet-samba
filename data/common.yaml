@@ -1,0 +1,183 @@
+# data/common.yaml
+---
+#
+# samba role/component selection
+#
+samba::client: true
+samba::server: true
+samba::winbind: true
+#
+# management scope
+#
+samba::manage_common_packages: true
+samba::manage_client_packages: true
+samba::manage_server_packages: true
+samba::manage_utils_packages: true
+samba::manage_winbind_packages: true
+samba::manage_plugins_packages: true
+samba::manage_config: true
+samba::manage_ad_join: true
+samba::manage_server_services: true
+samba::manage_winbind_services: true
+#
+# puppet log output control
+#
+samba::log_output: true
+#
+# install / package management
+#
+samba::ensure_common_packages: "installed"
+samba::ensure_client_packages: "installed"
+samba::ensure_server_packages: "installed"
+samba::ensure_utils_packages: "installed"
+samba::ensure_winbind_packages: "installed"
+samba::ensure_plugins_packages: "installed"
+samba::common_packages: []
+samba::client_packages: []
+samba::server_packages: []
+samba::utils_packages: []
+samba::winbind_packages: []
+samba::plugins_packages: []
+#
+# service management
+#
+samba::ensure_server_services: "running"
+samba::ensure_winbind_services: "running"
+samba::enable_server_services: true
+samba::enable_winbind_services: true
+samba::server_service_names: []
+samba::winbind_service_names: []
+
+#
+# smb.conf parameters
+# https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
+#
+
+samba::testparm: "/usr/bin/testparm --suppress-prompt"
+
+# common config
+samba::security: "auto"
+samba::workgroup: "WORKGROUP"
+samba::passdb_backend: "tdbsam"
+
+# networking config
+samba::hosts_allow: ~
+samba::hosts_deny: ~
+samba::hostname_lookups: ~
+samba::interfaces: ~
+samba::bind_interfaces_only: ~
+samba::keepalive: ~
+samba::socket_options: ~
+
+# tls config
+samba::tls_enabled: ~
+samba::tls_cafile: ~
+samba::tls_certfile: ~
+samba::tls_crlfile: ~
+samba::tls_dh_params_file: ~
+samba::tls_keyfile: ~
+samba::tls_priority: ~
+samba::tls_verify_peer: ~
+
+# kerberos config
+samba::kerberos_encryption_types: ~
+samba::kerberos_method: ~
+samba::realm: ~
+
+# ldap config
+samba::ldap_deref: ~
+samba::ldap_follow_referral: ~
+samba::ldap_ssl: ~
+samba::ldap_suffix: ~
+samba::ldap_machine_suffix: ~
+
+# winbind config
+samba::create_krb5_conf: ~
+samba::idmap_cache_time: ~
+samba::idmap_config: ~
+samba::include_system_krb5_conf: ~
+samba::require_strong_key: ~
+samba::template_homedir: ~
+samba::template_shell: ~
+samba::winbind_enum_groups: ~
+samba::winbind_enum_users: ~
+samba::winbind_nested_groups: ~
+samba::winbind_normalize_names: ~
+samba::winbind_nss_info: ~
+samba::winbind_offline_logon: ~
+samba::winbind_refresh_tickets: ~
+
+# client config
+samba::client_ipc_min_protocol: ~
+samba::client_ipc_max_protocol: ~
+samba::client_ipc_signing: ~
+samba::client_ldap_sasl_wrapping: ~
+samba::client_min_protocol: ~
+samba::client_max_protocol: ~
+samba::client_protection: ~
+samba::client_signing: ~
+samba::client_smb3_encryption_algorithms: ~
+samba::client_smb_encrypt: ~
+samba::client_smb3_signing_algorithms: ~
+samba::client_use_kerberos: ~
+samba::client_use_spnego_principal: ~
+
+# server config
+samba::server_string: ~
+samba::netbios_name: ~
+samba::server_min_protocol: ~
+samba::server_max_protocol: ~
+samba::server_role: ~
+samba::server_services: ~
+samba::server_signing: ~
+samba::server_smb3_encryption_algorithms: ~
+samba::server_smb3_signing_algorithms: ~
+samba::map_to_guest: ~
+
+# global share defaults
+samba::vfs_objects: ~
+
+# logging config
+samba::logging: ~
+samba::log_file: ~
+samba::log_level: ~
+samba::max_log_size: ~
+
+# files and directories management
+samba::system_config_directory: "/etc/samba"
+samba::system_config_file: "/etc/samba/smb.conf"
+samba::config_directory: "/etc/samba"
+samba::config_file: "/etc/samba/smb.conf"
+samba::binddns_dir: ~
+samba::cache_directory: ~
+samba::ctdbd_socket: ~
+samba::lock_directory: ~
+samba::ncalrpc_dir: ~
+samba::ntp_signd_socket_directory: ~
+samba::pid_directory: ~
+samba::private_dir: ~
+samba::root_directory: ~
+samba::smb_passwd_file: ~
+samba::state_directory: ~
+samba::usershare_path: ~
+samba::utmp_directory: ~
+samba::winbindd_socket_directory: ~
+samba::wtmp_directory: ~
+
+# additional config
+samba::additional_config: ~
+
+# shares config
+samba::shares: ~
+
+#
+# ad join parameters
+#
+
+samba::join_user: ~
+samba::join_password: ~
+samba::computer_ou: ~
+samba::os_name: ~
+samba::os_version: ~
+samba::os_service_pack: ~
+samba::service_names: ~

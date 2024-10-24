@@ -1,0 +1,223 @@
+<%- |
+String[1] $share_name,
+Stdlib::Absolutepath $path,
+Optional[String] $comment,
+
+# reference another existing share as template to copy parameters from
+Optional[String[1]] $copy,
+
+# network access config
+Optional[Array[String[1]]] $hosts_allow,
+Optional[Array[String[1]]] $hosts_deny,
+
+# share access config
+Optional[Stdlib::Yes_no] $access_based_share_enum,
+Optional[Array[String[1]]] $admin_users,
+Optional[Stdlib::Yes_no] $available,
+Optional[Stdlib::Yes_no] $browseable,
+Optional[Stdlib::Yes_no] $guest_ok,
+Optional[Stdlib::Yes_no] $guest_only,
+Optional[Array[String[1]]] $read_list,
+Optional[Stdlib::Yes_no] $read_only,
+Optional[Array[String[1]]] $write_list,
+Optional[Stdlib::Yes_no] $writeable,
+Optional[Array[String[1]]] $valid_users,
+Optional[Array[String[1]]] $invalid_users,
+
+# file/directory ownership and permissions (modes/masks and acls)
+Optional[Stdlib::Yes_no] $acl_allow_execute_always,
+Optional[Stdlib::Yes_no] $acl_flag_inherited_canonicalization,
+Optional[Stdlib::Yes_no] $acl_group_control,
+Optional[Stdlib::Yes_no] $acl_map_full_control,
+Optional[Stdlib::Yes_no] $map_acl_inherit,
+Optional[Stdlib::Filemode] $create_mask,
+Optional[Stdlib::Filemode] $directory_mask,
+Optional[Stdlib::Filemode] $force_create_mode,
+Optional[Stdlib::Filemode] $force_directory_mode,
+Optional[String] $force_group,
+Optional[String] $force_user,
+Optional[Stdlib::Yes_no] $inherit_acls,
+Optional[Enum['yes','no','windows and unix','unix only']] $inherit_owner,
+Optional[Stdlib::Yes_no] $inherit_permissions,
+
+# links
+Optional[Stdlib::Yes_no] $follow_symlinks,
+Optional[Stdlib::Yes_no] $wide_links,
+
+# vfs
+Optional[Array[String[1]]] $vfs_objects,
+
+# name mangling
+Optional[Stdlib::Yes_no] $case_sensitive,
+Optional[Enum['upper','lower']] $default_case,
+Optional[Stdlib::Yes_no] $preserve_case,
+Optional[Stdlib::Yes_no] $short_preserve_case,
+
+# hiding files
+Optional[Stdlib::Yes_no] $hide_dot_files,
+Optional[Stdlib::Yes_no] $hide_special_files,
+
+# locks
+Optional[Stdlib::Yes_no] $locking,
+Optional[Stdlib::Yes_no] $posix_locking,
+Optional[Enum['auto','yes','no']] $strict_locking,
+Optional[Stdlib::Yes_no] $blocking_locks,
+Optional[Stdlib::Yes_no] $oplocks,
+Optional[Stdlib::Yes_no] $kernel_oplocks,
+Optional[Stdlib::Yes_no] $level2_oplocks,
+
+# dos attributes
+Optional[Stdlib::Yes_no] $store_dos_attributes,
+
+# additional config
+Optional[Array[String[1]]] $additional_config,
+| -%>
+[<%= $share_name %>]
+    path = <%= $path %>
+<%- unless $comment =~ Undef { -%>
+    comment = <%= $comment %>
+<%- } -%>
+<%- unless $copy =~ Undef { -%>
+    copy = <%= $copy %>
+<%- } -%>
+<%- unless $hosts_allow =~ Undef { -%>
+    hosts allow = <%= $hosts_allow.join(' ') %>
+<%- } -%>
+<%- unless $hosts_deny =~ Undef { -%>
+    hosts deny = <%= $hosts_deny.join(' ') %>
+<%- } -%>
+<%- unless $access_based_share_enum =~ Undef { -%>
+    access based share enum = <%= $access_based_share_enum %>
+<%- } -%>
+<%- unless $admin_users =~ Undef { -%>
+    admin users = <%= $admin_users.join(' ') %>
+<%- } -%>
+<%- unless $available =~ Undef { -%>
+    available = <%= $available %>
+<%- } -%>
+<%- unless $browseable =~ Undef { -%>
+    browseable = <%= $browseable %>
+<%- } -%>
+<%- unless $guest_ok =~ Undef { -%>
+    guest ok = <%= $guest_ok %>
+<%- } -%>
+<%- unless $guest_only =~ Undef { -%>
+    guest only = <%= $guest_only %>
+<%- } -%>
+<%- unless $read_list =~ Undef { -%>
+    read list = <%= $read_list.join(', ') %>
+<%- } -%>
+<%- unless $read_only =~ Undef { -%>
+    read only = <%= $read_only %>
+<%- } -%>
+<%- unless $write_list =~ Undef { -%>
+    write list = <%= $write_list.join(', ') %>
+<%- } -%>
+<%- unless $writeable =~ Undef { -%>
+    writeable = <%= $writeable %>
+<%- } -%>
+<%- unless $valid_users =~ Undef { -%>
+    valid users = <%= $valid_users.join(', ') %>
+<%- } -%>
+<%- unless $invalid_users =~ Undef { -%>
+    invalid users = <%= $invalid_users.join(' ') %>
+<%- } -%>
+<%- unless $acl_allow_execute_always =~ Undef { -%>
+    acl allow execute always = <%= $acl_allow_execute_always %>
+<%- } -%>
+<%- unless $acl_flag_inherited_canonicalization =~ Undef { -%>
+    acl flag inherited canonicalization = <%= $acl_flag_inherited_canonicalization %>
+<%- } -%>
+<%- unless $acl_group_control =~ Undef { -%>
+    acl group control = <%= $acl_group_control %>
+<%- } -%>
+<%- unless $acl_map_full_control =~ Undef { -%>
+    acl map full control = <%= $acl_map_full_control %>
+<%- } -%>
+<%- unless $map_acl_inherit =~ Undef { -%>
+    map acl inherit = <%= $map_acl_inherit %>
+<%- } -%>
+<%- unless $create_mask =~ Undef { -%>
+    create mask = <%= $create_mask %>
+<%- } -%>
+<%- unless $directory_mask =~ Undef { -%>
+    directory mask = <%= $directory_mask %>
+<%- } -%>
+<%- unless $force_create_mode =~ Undef { -%>
+    force create mode = <%= $force_create_mode %>
+<%- } -%>
+<%- unless $force_directory_mode =~ Undef { -%>
+    force directory mode = <%= $force_directory_mode %>
+<%- } -%>
+<%- unless $force_group =~ Undef { -%>
+    force group = <%= $force_group %>
+<%- } -%>
+<%- unless $force_user =~ Undef { -%>
+    force user = <%= $force_user %>
+<%- } -%>
+<%- unless $inherit_acls =~ Undef { -%>
+    inherit acls = <%= $inherit_acls %>
+<%- } -%>
+<%- unless $inherit_owner =~ Undef { -%>
+    inherit owner = <%= $inherit_owner %>
+<%- } -%>
+<%- unless $inherit_permissions =~ Undef { -%>
+    inherit permissions = <%= $inherit_permissions %>
+<%- } -%>
+<%- unless $follow_symlinks =~ Undef { -%>
+    follow symlinks = <%= $follow_symlinks %>
+<%- } -%>
+<%- unless $wide_links =~ Undef { -%>
+    wide links = <%= $wide_links %>
+<%- } -%>
+<%- unless $vfs_objects =~ Undef { -%>
+    vfs objects = <%= $vfs_objects.join(' ') %>
+<%- } -%>
+<%- unless $case_sensitive =~ Undef { -%>
+    case sensitive = <%= $case_sensitive %>
+<%- } -%>
+<%- unless $default_case =~ Undef { -%>
+    default case = <%= $default_case %>
+<%- } -%>
+<%- unless $preserve_case =~ Undef { -%>
+    preserve case = <%= $preserve_case %>
+<%- } -%>
+<%- unless $short_preserve_case =~ Undef { -%>
+    short preserve case = <%= $short_preserve_case %>
+<%- } -%>
+<%- unless $hide_dot_files =~ Undef { -%>
+    hide dot files = <%= $hide_dot_files %>
+<%- } -%>
+<%- unless $hide_special_files =~ Undef { -%>
+    hide special files = <%= $hide_special_files %>
+<%- } -%>
+<%- unless $locking =~ Undef { -%>
+    locking = <%= $locking %>
+<%- } -%>
+<%- unless $posix_locking =~ Undef { -%>
+    posix locking = <%= $posix_locking %>
+<%- } -%>
+<%- unless $strict_locking =~ Undef { -%>
+    strict locking = <%= $strict_locking %>
+<%- } -%>
+<%- unless $blocking_locks =~ Undef { -%>
+    blocking locks = <%= $blocking_locks %>
+<%- } -%>
+<%- unless $oplocks =~ Undef { -%>
+    oplocks = <%= $oplocks %>
+<%- } -%>
+<%- unless $kernel_oplocks =~ Undef { -%>
+    kernel oplocks = <%= $kernel_oplocks %>
+<%- } -%>
+<%- unless $level2_oplocks =~ Undef { -%>
+    level2 oplocks = <%= $level2_oplocks %>
+<%- } -%>
+
+<%- unless $store_dos_attributes =~ Undef { -%>
+    store dos attributes = <%= $store_dos_attributes %>
+<%- } -%>
+<%- unless $additional_config =~ Undef { -%>
+<%- $additional_config.each |String[1] $config_line| { -%>
+    <%= $config_line %>
+<%-   } -%>
+<%- } -%>
