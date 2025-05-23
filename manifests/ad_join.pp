@@ -56,9 +56,9 @@ class samba::ad_join (
     if $service_names and $kerberos_method =~ 'keytab' {
       $service_names.each |String $service_name| {
         $setspn_name_cmd = "net ads setspn add -U ${join_user}%\$ADJOINPW ${computer_name} ${service_name}/${computer_name}"
-        $setspn_name_chk = "net ads setspn list | grep ${service_name}/${computer_name}"
+        $setspn_name_chk = "net ads setspn list -U ${join_user}%\$ADJOINPW | grep ${service_name}/${computer_name}"
         $setspn_fqdn_cmd = "net ads setspn add -U ${join_user}%\$ADJOINPW ${computer_name} ${service_name}/${computer_fqdn}"
-        $setspn_fqdn_chk = "net ads setspn list | grep ${service_name}/${computer_fqdn}"
+        $setspn_fqdn_chk = "net ads setspn list -U ${join_user}%\$ADJOINPW | grep ${service_name}/${computer_fqdn}"
         exec { "net ads setspn add ${computer_name} ${service_name}/${computer_name}":
           path        => ['/usr/sbin', '/usr/bin', '/bin', '/sbin'],
           environment => $join_env,

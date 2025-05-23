@@ -9,3 +9,10 @@ All notable changes to this project will be documented in this file.
 **Bugfixes**
 
 **Known Issues**
+
+## Release 0.1.1
+
+### Changed
+
+- add authentication credentials to list actions on AD objects (setspn list)
+
